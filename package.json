@@ -4,7 +4,7 @@
   "description": "CLI for getting weather",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
   "author": "Ampilov Sergei",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SergeiAmpilov/weather-cli/issues"
+    "url": "https://github.com/SergeiAmpilov/weather-cli/issues",
+    "email": "sergei.ampilov@gmail.com"
   },
   "homepage": "https://github.com/SergeiAmpilov/weather-cli#readme"
 }
