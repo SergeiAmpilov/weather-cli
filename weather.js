@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import { getArgs } from "./helpers/args.js";
+import { printError, printSuccess, printHelp } from "./services/log.service.js";
 
 const initCLI = () => {
-  console.log('started weather cli');
   const args = getArgs(process.argv);
-  console.log(args);
+
   if (args.h) {
     // view help
+    printHelp()
   }
 
   if (args.s) {
