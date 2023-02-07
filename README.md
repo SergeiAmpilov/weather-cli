@@ -1,5 +1,5 @@
 # weather-cli
-
+![weather-cli](ghtitle.jpg)
 Command-line application for getting weather
 
 ## Technologies
