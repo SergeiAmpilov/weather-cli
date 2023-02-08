@@ -6,7 +6,9 @@ const getWeather = async () => {
 
   const token = await getKeyValue(TOKEN_DICTIONARY.token);
   const lat = await getKeyValue(TOKEN_DICTIONARY.lat);
-  const lon = await getKeyValue(TOKEN_DICTIONARY.lon);
+  const lon = await getKeyValue(TOKEN_DICTIONARY.long);
+
+  console.log(`lat - lobg - ${lat} - ${lon}`);
 
   if (!token) {
     throw new Error('Token not found. Set API token with commant -t [API_KEY]');
@@ -28,8 +30,8 @@ const getWeather = async () => {
       lang: 'ru_RU',
       // lat: 55.75396,
       // long: 37.620393
-      lat,
-      long: lon
+      lat: lat,
+      long: lon,
     },
     headers: {
       "X-Yandex-API-Key": token

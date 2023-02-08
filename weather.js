@@ -32,7 +32,7 @@ const saveLat = async (lat) => {
 
 const saveLon = async (lon) => {
   try {
-    await saveKeyValue(TOKEN_DICTIONARY.lon, lon);
+    await saveKeyValue(TOKEN_DICTIONARY.long, lon);
     printSuccess('Long is saved')
   } catch (e) {
     printError(e.message)
