@@ -21,8 +21,26 @@ const saveToken = async (token) => {
 
 }
 
-const getForecast = async () => {
+const saveLat = async (lat) => {
+  try {
+    await saveKeyValue(TOKEN_DICTIONARY.lat, lat);
+    printSuccess('Latitude is saved')
+  } catch (e) {
+    printError(e.message)
+  }
+}
 
+const saveLon = async (lon) => {
+  try {
+    await saveKeyValue(TOKEN_DICTIONARY.lon, lon);
+    printSuccess('Long is saved')
+  } catch (e) {
+    printError(e.message)
+  }
+}
+
+
+const getForecast = async () => {
   try {
     const weatherData = await getWeather();
     console.log(weatherData);
@@ -35,7 +53,6 @@ const getForecast = async () => {
       printError(e.message);
     }
   }
-
 }
 
 const initCLI = () => {
@@ -43,10 +60,20 @@ const initCLI = () => {
 
   if (args.h) {
     printHelp();
+    return ;
   }
 
-  if (args.s) {
-    saveKeyValue('city', args.s);
+  /* deprecated */
+  // if (args.s) {
+  //   saveKeyValue('city', args.s);
+  // }
+
+  if (args.lat) {
+    return saveLat(args.lat);
+  }
+
+  if (args.lon) {
+    return saveLon(args.lon);
   }
 
   if (args.t) {
