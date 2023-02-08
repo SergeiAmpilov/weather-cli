@@ -21,6 +21,23 @@ const saveToken = async (token) => {
 
 }
 
+const getForecast = async () => {
+
+  try {
+    const weatherData = await getWeather();
+    console.log(weatherData);
+  } catch (e) {
+    if (e?.response?.status == 404) {
+      printError('Incorrect data in request');
+    } else if (e?.response?.status == 401) {
+      printError('Incorrect token');
+    } else {
+      printError(e.message);
+    }
+  }
+
+}
+
 const initCLI = () => {
   const args = getArgs(process.argv);
 
@@ -34,10 +51,9 @@ const initCLI = () => {
 
   if (args.t) {
     return saveToken(args.t);
-  }
+  }  
 
-  getWeather('moscow');
-  
+  getForecast();
 }
 
 

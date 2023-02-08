@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getKeyValue, TOKEN_DICTIONARY } from './storage.service.js';
 
 
-const getWeather = async (city) => {
+const getWeather = async () => {
 
   const token = await getKeyValue(TOKEN_DICTIONARY.token);
 
@@ -11,7 +11,6 @@ const getWeather = async (city) => {
   }
 
   /* https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html */
-
   const { data } = await axios({
     method: 'get',
     baseURL: 'https://api.weather.yandex.ru/v2/forecast',
@@ -25,7 +24,6 @@ const getWeather = async (city) => {
     }
   });
 
-  console.log(data);
   return data;
 
 };
