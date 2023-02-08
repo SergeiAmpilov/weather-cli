@@ -10,11 +10,19 @@ const getWeather = async (city) => {
     throw new Error('Token not found. Set API token with commant -t [API_KEY]');
   }
 
-  const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
-    q: city,
-    appid: token,
-    lang: 'ru',
-    units: 'metric'
+  /* https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html */
+
+  const { data } = await axios({
+    method: 'get',
+    baseURL: 'https://api.weather.yandex.ru/v2/forecast',
+    params: {
+      lang: 'ru_RU',
+      lat: 55.75396,
+      long: 37.620393
+    },
+    headers: {
+      "X-Yandex-API-Key": token
+    }
   });
 
   console.log(data);
