@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import chalk from 'chalk';
 import { getArgs } from "./helpers/args.js";
 import { getWeather } from "./services/api.service.js";
 import { printError, printSuccess, printHelp } from "./services/log.service.js";
@@ -39,11 +39,23 @@ const saveLon = async (lon) => {
   }
 }
 
+const beautifyText = (weatherData) => {
+  
+  let messageBeauty = '' ;
+
+  messageBeauty += chalk.green('Температура воздуха: ') + weatherData?.temp + '\t' ;
+  messageBeauty += chalk.green('Ощущается как: ') + weatherData?.feels_like + '\n';
+  messageBeauty += chalk.yellow('Скорость ветра: ') + weatherData?.wind_speed + ' м/с \n';
+  messageBeauty += chalk.blue('Влажность: ') + weatherData?.humidity + ' % \n';
+
+  return messageBeauty;
+}
+
 
 const getForecast = async () => {
   try {
     const weatherData = await getWeather();
-    console.log(weatherData);
+    console.log(beautifyText(weatherData.fact));
   } catch (e) {
     if (e?.response?.status == 404) {
       printError('Incorrect data in request');

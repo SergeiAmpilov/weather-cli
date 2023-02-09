@@ -8,8 +8,6 @@ const getWeather = async () => {
   const lat = await getKeyValue(TOKEN_DICTIONARY.lat);
   const lon = await getKeyValue(TOKEN_DICTIONARY.long);
 
-  console.log(`lat - lobg - ${lat} - ${lon}`);
-
   if (!token) {
     throw new Error('Token not found. Set API token with commant -t [API_KEY]');
   }
@@ -25,11 +23,10 @@ const getWeather = async () => {
   /* https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html */
   const { data } = await axios({
     method: 'get',
-    baseURL: 'https://api.weather.yandex.ru/v2/forecast',
+    // baseURL: 'https://api.weather.yandex.ru/v2/forecast', /* test */
+    baseURL: 'https://api.weather.yandex.ru/v2/informers', /* weather on my site */
     params: {
       lang: 'ru_RU',
-      // lat: 55.75396,
-      // long: 37.620393
       lat: lat,
       long: lon,
     },
