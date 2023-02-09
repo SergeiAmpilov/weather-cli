@@ -9,8 +9,12 @@ Command-line application for getting weather
 
 ## Setup
 
+**npm i -g weather-cli-amp**
+
 ## Examples
 
-## Working process
+*weather*
 
-06.02.23 Init repository, write to file token
+*weather -s moscow*
+
+*weather -t 47...jk*
