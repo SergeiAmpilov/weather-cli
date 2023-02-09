@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import chalk from 'chalk';
 import { getArgs } from "./helpers/args.js";
-import { getWeather } from "./services/api.service.js";
-import { printError, printSuccess, printHelp } from "./services/log.service.js";
+import { getWeather, getIcon } from "./services/api.service.js";
+import { printError, printSuccess, printHelp, printWeather } from "./services/log.service.js";
 import { saveKeyValue, TOKEN_DICTIONARY } from "./services/storage.service.js";
 
 
@@ -21,41 +20,39 @@ const saveToken = async (token) => {
 
 }
 
-const saveLat = async (lat) => {
+// const saveLat = async (lat) => {
+//   try {
+//     await saveKeyValue(TOKEN_DICTIONARY.lat, lat);
+//     printSuccess('Latitude is saved')
+//   } catch (e) {
+//     printError(e.message)
+//   }
+// }
+
+// const saveLon = async (lon) => {
+//   try {
+//     await saveKeyValue(TOKEN_DICTIONARY.long, lon);
+//     printSuccess('Long is saved')
+//   } catch (e) {
+//     printError(e.message)
+//   }
+// }
+
+
+const saveCity = async (city) => {
   try {
-    await saveKeyValue(TOKEN_DICTIONARY.lat, lat);
-    printSuccess('Latitude is saved')
+    await saveKeyValue(TOKEN_DICTIONARY.city, city);
+    printSuccess('City is saved')
   } catch (e) {
     printError(e.message)
   }
 }
-
-const saveLon = async (lon) => {
-  try {
-    await saveKeyValue(TOKEN_DICTIONARY.long, lon);
-    printSuccess('Long is saved')
-  } catch (e) {
-    printError(e.message)
-  }
-}
-
-const beautifyText = (weatherData) => {
-  
-  let messageBeauty = '' ;
-
-  messageBeauty += chalk.green('Температура воздуха: ') + weatherData?.temp + '\t' ;
-  messageBeauty += chalk.green('Ощущается как: ') + weatherData?.feels_like + '\n';
-  messageBeauty += chalk.yellow('Скорость ветра: ') + weatherData?.wind_speed + ' м/с \n';
-  messageBeauty += chalk.blue('Влажность: ') + weatherData?.humidity + ' % \n';
-
-  return messageBeauty;
-}
-
 
 const getForecast = async () => {
   try {
     const weatherData = await getWeather();
-    console.log(beautifyText(weatherData.fact));
+    printWeather(weatherData, getIcon(weatherData?.weather[0].icon));
+    // console.log(weatherData);
   } catch (e) {
     if (e?.response?.status == 404) {
       printError('Incorrect data in request');
@@ -75,11 +72,11 @@ const initCLI = () => {
     return ;
   }
 
-  /* deprecated */
-  // if (args.s) {
-  //   saveKeyValue('city', args.s);
-  // }
+  if (args.s) {
+    return saveCity(args.s);
+  }
 
+  /*
   if (args.lat) {
     return saveLat(args.lat);
   }
@@ -87,6 +84,7 @@ const initCLI = () => {
   if (args.lon) {
     return saveLon(args.lon);
   }
+  */
 
   if (args.t) {
     return saveToken(args.t);

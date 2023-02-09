@@ -1,17 +1,45 @@
 import axios from 'axios';
 import { getKeyValue, TOKEN_DICTIONARY } from './storage.service.js';
 
+const getIcon = (icon) => {
+  if (!icon) {
+    return '';
+  }
+
+  switch (icon.slice(0, -1)) {
+    case '01':
+      return '☀';
+    case '02':
+      return '☀';
+    case '03':
+      return '☀ ☁';
+    case '04':
+      return '☁';
+    case '09':
+      return '☔ ☁';
+    case '10':
+      return '☔';
+    case '11':
+      return '☁ ❆';
+    case '13':
+      return '❆';        
+    case '50':
+      return '❆';  
+  }
+};
 
 const getWeather = async () => {
 
   const token = await getKeyValue(TOKEN_DICTIONARY.token);
-  const lat = await getKeyValue(TOKEN_DICTIONARY.lat);
-  const lon = await getKeyValue(TOKEN_DICTIONARY.long);
+  // const lat = await getKeyValue(TOKEN_DICTIONARY.lat);
+  // const lon = await getKeyValue(TOKEN_DICTIONARY.long);
+  const city = process.env.CITY ?? await getKeyValue(TOKEN_DICTIONARY.city);
 
   if (!token) {
     throw new Error('Token not found. Set API token with commant -t [API_KEY]');
   }
 
+  /*
   if (!lat) {
     throw new Error('Latitude not found. Set latitude API with commant -lat [Latitude]');
   }
@@ -19,19 +47,22 @@ const getWeather = async () => {
   if (!lon) {
     throw new Error('Long not found. Set long API with commant -lon [long]');
   }
+  */
 
-  /* https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html */
+  if (!city) {
+    throw new Error('Long not found. Set long API with commant -s [long]');
+  }
+
   const { data } = await axios({
     method: 'get',
-    // baseURL: 'https://api.weather.yandex.ru/v2/forecast', /* test */
-    baseURL: 'https://api.weather.yandex.ru/v2/informers', /* weather on my site */
+    baseURL: 'https://api.openweathermap.org/data/2.5/weather',
     params: {
-      lang: 'ru_RU',
-      lat: lat,
-      long: lon,
-    },
-    headers: {
-      "X-Yandex-API-Key": token
+      lang: 'ru',
+      // lat: lat,
+      // lon: lon,
+      q: city,
+      appid: token,
+      units: 'metric',
     }
   });
 
@@ -39,4 +70,4 @@ const getWeather = async () => {
 
 };
 
-export { getWeather };
+export { getWeather, getIcon };
