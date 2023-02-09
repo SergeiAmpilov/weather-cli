@@ -20,25 +20,6 @@ const saveToken = async (token) => {
 
 }
 
-// const saveLat = async (lat) => {
-//   try {
-//     await saveKeyValue(TOKEN_DICTIONARY.lat, lat);
-//     printSuccess('Latitude is saved')
-//   } catch (e) {
-//     printError(e.message)
-//   }
-// }
-
-// const saveLon = async (lon) => {
-//   try {
-//     await saveKeyValue(TOKEN_DICTIONARY.long, lon);
-//     printSuccess('Long is saved')
-//   } catch (e) {
-//     printError(e.message)
-//   }
-// }
-
-
 const saveCity = async (city) => {
   try {
     await saveKeyValue(TOKEN_DICTIONARY.city, city);
@@ -52,7 +33,6 @@ const getForecast = async () => {
   try {
     const weatherData = await getWeather();
     printWeather(weatherData, getIcon(weatherData?.weather[0].icon));
-    // console.log(weatherData);
   } catch (e) {
     if (e?.response?.status == 404) {
       printError('Incorrect data in request');
@@ -68,23 +48,12 @@ const initCLI = () => {
   const args = getArgs(process.argv);
 
   if (args.h) {
-    printHelp();
-    return ;
+    return printHelp();
   }
 
   if (args.s) {
     return saveCity(args.s);
   }
-
-  /*
-  if (args.lat) {
-    return saveLat(args.lat);
-  }
-
-  if (args.lon) {
-    return saveLon(args.lon);
-  }
-  */
 
   if (args.t) {
     return saveToken(args.t);

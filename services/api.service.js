@@ -31,23 +31,11 @@ const getIcon = (icon) => {
 const getWeather = async () => {
 
   const token = await getKeyValue(TOKEN_DICTIONARY.token);
-  // const lat = await getKeyValue(TOKEN_DICTIONARY.lat);
-  // const lon = await getKeyValue(TOKEN_DICTIONARY.long);
   const city = process.env.CITY ?? await getKeyValue(TOKEN_DICTIONARY.city);
 
   if (!token) {
     throw new Error('Token not found. Set API token with commant -t [API_KEY]');
   }
-
-  /*
-  if (!lat) {
-    throw new Error('Latitude not found. Set latitude API with commant -lat [Latitude]');
-  }
-
-  if (!lon) {
-    throw new Error('Long not found. Set long API with commant -lon [long]');
-  }
-  */
 
   if (!city) {
     throw new Error('Long not found. Set long API with commant -s [long]');
@@ -58,8 +46,6 @@ const getWeather = async () => {
     baseURL: 'https://api.openweathermap.org/data/2.5/weather',
     params: {
       lang: 'ru',
-      // lat: lat,
-      // lon: lon,
       q: city,
       appid: token,
       units: 'metric',
