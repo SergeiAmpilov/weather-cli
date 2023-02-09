@@ -18,3 +18,4 @@ Command-line application for getting weather
 *weather -s moscow*
 
 *weather -t 47...jk*
+![example](examplesm.jpg)
